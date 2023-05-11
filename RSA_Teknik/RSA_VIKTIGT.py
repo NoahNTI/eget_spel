@@ -85,12 +85,13 @@ def de_crypt():
                 
 max_index = 0
 def add_crypt_to_list():
-    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as fp:
-        for count, line in enumerate(fp):
-            index = count
 
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
         f.write(f"{index+1}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
+    
+    '''with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as fp:
+        for count, line in enumerate(fp):
+            index = count'''
 
 while True:
     medelande = input('Skriv ett medelande:     ')
