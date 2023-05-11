@@ -1,50 +1,89 @@
+from colorama import Fore, Style
+
 hemligt_medelande = []
 krypterat_medelande = []
 dekrypterat_medelande = []
 
 letters_to_numbers = {
-    'a': 2,
-    'b': 3,
-    'c': 4,
-    'd': 5,
-    'e': 6,
-    'f': 7,
-    'g': 8,
-    'h': 9,
-    'i': 10,
-    'j': 11,
-    'k': 12,
-    'l': 13,
-    'm': 14,
-    'n': 15,
-    'o': 16,
-    'p': 17,
-    'q': 18,
-    'r': 19,
-    's': 20,
-    't': 21,
-    'u': 22,
-    'v': 23,
-    'w': 24,
-    'x': 25,
-    'y': 26,
-    'z': 27,
-    'å': 28,
-    'ä': 29,
-    'ö': 30,
-    ',': 31,'.': 32,
-    '/': 33,'?': 34,
-    '!': 35, '-': 36,
-    '_': 37, ':': 38,
-    ';': 39,'(': 40,
-    ')': 41, '0': 42,
-    '1': 43, '2': 44,
-    '3': 45, '4': 46,
-    '5': 47, '6': 48,
-    '7': 49, '8': 50,
-    '9': 51, "'": 52,
-    '%': 53, ' ': 99,
-    
+    'A': 2,
+    'B': 3,
+    'C': 4,
+    'D': 5,
+    'E': 6,
+    'F': 7,
+    'G': 8,
+    'H': 9,
+    'I': 10,
+    'J': 11,
+    'K': 12,
+    'L': 13,
+    'M': 14,
+    'N': 15,
+    'O': 16,
+    'P': 17,
+    'Q': 18,
+    'R': 19,
+    'S': 20,
+    'T': 21,
+    'U': 22,
+    'V': 23,
+    'W': 24,
+    'X': 25,
+    'Y': 26,
+    'Z': 27,
+    'a': 28,
+    'b': 29,
+    'c': 30,
+    'd': 31,
+    'e': 32,
+    'f': 33,
+    'g': 34,
+    'h': 35,
+    'i': 36,
+    'j': 37,
+    'k': 38,
+    'l': 39,
+    'm': 40,
+    'n': 41,
+    'o': 42,
+    'p': 43,
+    'q': 44,
+    'r': 45,
+    's': 46,
+    't': 47,
+    'u': 48,
+    'v': 49,
+    'w': 50,
+    'x': 51,
+    'y': 52,
+    'z': 53,
+    'å': 54,
+    'ä': 55,
+    'ö': 56,
+    ',': 57,
+    '.': 58,
+    '/': 59,
+    '?': 60,
+    '!': 61,
+    '-': 62,
+    '_': 63,
+    ':': 64,
+    ';': 65,
+    '(': 66,
+    ')': 67,
+    '0': 68,
+    '1': 69,
+    '2': 70,
+    '3': 71,
+    '4': 72,
+    '5': 73,
+    '6': 74,
+    '7': 75,
+    '8': 76,
+    '9': 77,
+    "'": 78,
+    '%': 79,
+    ' ': 99,
 }
 
 p = 1009
@@ -53,8 +92,20 @@ n = p*q
 phi=(p-1)*(q-1)
 e = 1009037
 d = 730661
-index = 1
 
+def menu():
+    while True:
+        chois = int(input("Tryck (1) för att skriva ett medelande\nTryck (2) för att avkryptera medelanden\n:   "))
+        if chois == 1:
+            try:
+                crypt()
+                de_crypt()
+            except KeyError:
+                print('No, somthing in this line of data is not enebled to be convorted into a crypt')
+            add_crypt_to_list()
+        elif chois == 2:
+            get_crypt_by_index()
+            
 def get_crypt_by_index():
     index_to_get = int(input('What index number are you looking for:    '))
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
@@ -63,10 +114,29 @@ def get_crypt_by_index():
                 
                 crypt_str = line.split(":")[1].strip()
                 crypt_numbers = [int(x) for x in crypt_str.split()]
-                print(crypt_numbers)
+                
+                print(f"The incrypted version is {crypt_numbers} \nThe cryptated version is:")
+                
+                #de crypt 
+                dekrypterat_medelande.clear()
+                for i in crypt_numbers:
+                    dec=pow(i,d,n)
+                    for letter, number in letters_to_numbers.items():
+                        if number == dec:
+                            dekrypterat_medelande.append(letter)
+                print(Fore.RED + "".join(map(str, dekrypterat_medelande)) + Style.RESET_ALL)   
+                print('\n')              
     return None
 
 def crypt():
+    medelande = input('Skriv ett medelande:     ')
+    hemligt_medelande.clear()
+    dekrypterat_medelande.clear()
+    krypterat_medelande.clear()
+    
+    for letter in medelande:
+        hemligt_medelande.append(letter)
+            
     for i in hemligt_medelande:
         m = letters_to_numbers[i]
         #crypt
@@ -83,32 +153,25 @@ def de_crypt():
             if number == dec:
                 dekrypterat_medelande.append(letter)
                 
-max_index = 0
 def add_crypt_to_list():
-
-    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
-        f.write(f"{index+1}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
+    with open("egna_spel/RSA_Teknik/krypterade_medelande.txt", 'r') as fp:
+        max_index = len(fp.readlines())
     
-    '''with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as fp:
-        for count, line in enumerate(fp):
-            index = count'''
+    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
+        f.write(f"{max_index}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
 
 while True:
-    medelande = input('Skriv ett medelande:     ')
-    hemligt_medelande.clear()
-    dekrypterat_medelande.clear()
-    krypterat_medelande.clear()
+    menu()
     
-    for letter in medelande:
-        hemligt_medelande.append(letter)
-        
+    """""
     crypt()
     de_crypt()
     print(*krypterat_medelande)
     add_crypt_to_list()
     get_crypt_by_index()
-    index += 1
-
+    """
+    
+    
     print(krypterat_medelande)
     print(dekrypterat_medelande)
     print()
