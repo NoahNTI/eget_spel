@@ -66,7 +66,6 @@ def get_crypt_by_index():
                 print(crypt_numbers)
     return None
 
-
 def crypt():
     for i in hemligt_medelande:
         m = letters_to_numbers[i]
@@ -84,10 +83,17 @@ def de_crypt():
             if number == dec:
                 dekrypterat_medelande.append(letter)
                 
+max_index = 0
+def add_crypt_to_list():
+    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
+        lines = f.readlines()
+        if lines == 0:
+            index = 1
+        else:
+            index = max(int(line.split(':')[0]) for line in lines)
 
-def add_crypt_to_list(index):
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
-        f.write(f"{index}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
+        f.write(f"{index+1}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
 
 
 
@@ -104,7 +110,7 @@ while True:
     crypt()
     de_crypt()
     print(*krypterat_medelande)
-    add_crypt_to_list(index)
+    add_crypt_to_list()
     get_crypt_by_index()
     ########################
     index += 1
