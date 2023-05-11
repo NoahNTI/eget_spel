@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+import os
 
 hemligt_medelande = []
 krypterat_medelande = []
@@ -93,21 +94,28 @@ phi=(p-1)*(q-1)
 e = 1009037
 d = 730661
 
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def menu():
     while True:
         chois = int(input("Tryck (1) för att skriva ett medelande\nTryck (2) för att avkryptera medelanden\n:   "))
         if chois == 1:
+
             try:
                 crypt()
                 de_crypt()
             except KeyError:
                 print('No, somthing in this line of data is not enebled to be convorted into a crypt')
+
             add_crypt_to_list()
         elif chois == 2:
             get_crypt_by_index()
+        print('\n')
             
 def get_crypt_by_index():
     index_to_get = int(input('What index number are you looking for:    '))
+    
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
         for line in f:
             if line.startswith(f"{index_to_get}:"):
@@ -125,7 +133,6 @@ def get_crypt_by_index():
                         if number == dec:
                             dekrypterat_medelande.append(letter)
                 print(Fore.RED + "".join(map(str, dekrypterat_medelande)) + Style.RESET_ALL)   
-                print('\n')              
     return None
 
 def crypt():
@@ -143,6 +150,10 @@ def crypt():
         enc=pow(m,e,n)
         crypt_number = (enc)
         krypterat_medelande.append(crypt_number)
+    
+    with open("egna_spel/RSA_Teknik/krypterade_medelande.txt", 'r') as fp:
+        max_index = len(fp.readlines())
+        print(f'Your\'e incryption is now stored whit the list index:   {max_index}')
 
 def de_crypt():
     for i in krypterat_medelande:
@@ -160,18 +171,5 @@ def add_crypt_to_list():
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
         f.write(f"{max_index}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
 
-while True:
-    menu()
-    
-    """""
-    crypt()
-    de_crypt()
-    print(*krypterat_medelande)
-    add_crypt_to_list()
-    get_crypt_by_index()
-    """
-    
-    
-    print(krypterat_medelande)
-    print(dekrypterat_medelande)
-    print()
+
+menu()
