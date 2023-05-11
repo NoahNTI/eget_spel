@@ -44,8 +44,6 @@ def guess():
             letter_used.append(letter_guess)
         print('\n\n\n\n\n')
         
-        
-    
 def letter_in_word(letter_guess):
     i = 0
     for letter in letters:
@@ -63,7 +61,6 @@ for x in letters:
         word_word_3.append(' ')
     else:
         word_word_3.append('_')
-
 
 while True: 
     guess()

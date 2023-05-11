@@ -1,6 +1,3 @@
-import string
-import re
-
 hemligt_medelande = []
 krypterat_medelande = []
 dekrypterat_medelande = []
@@ -56,6 +53,19 @@ n = p*q
 phi=(p-1)*(q-1)
 e = 1009037
 d = 730661
+index = 1
+
+def get_crypt_by_index():
+    index_to_get = int(input('What index number are you looking for:    '))
+    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
+        for line in f:
+            if line.startswith(f"{index_to_get}:"):
+                
+                crypt_str = line.split(":")[1].strip()
+                crypt_numbers = [int(x) for x in crypt_str.split()]
+                print(crypt_numbers)
+    return None
+
 
 def crypt():
     for i in hemligt_medelande:
@@ -74,21 +84,31 @@ def de_crypt():
             if number == dec:
                 dekrypterat_medelande.append(letter)
                 
-def add_crypt_to_list():
+
+def add_crypt_to_list(index):
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
-        f.write(krypterat_medelande)
+        f.write(f"{index}: " + ' '.join(map(str, krypterat_medelande)) + "\n")
 
-medelande = input('Skriv ett medelande:     ')
 
-for letter in medelande:
-    hemligt_medelande.append(letter)
+
+while True:
+    ########################
+    medelande = input('Skriv ett medelande:     ')
+    hemligt_medelande.clear()
+    dekrypterat_medelande.clear()
+    krypterat_medelande.clear()
     
-########################
-crypt()
-de_crypt()
-add_crypt_to_list()
-########################
+    for letter in medelande:
+        hemligt_medelande.append(letter)
+        
+    crypt()
+    de_crypt()
+    print(*krypterat_medelande)
+    add_crypt_to_list(index)
+    get_crypt_by_index()
+    ########################
+    index += 1
 
-
-print(krypterat_medelande)
-print(dekrypterat_medelande)
+    print(krypterat_medelande)
+    print(dekrypterat_medelande)
+    print()
