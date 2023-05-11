@@ -249,3 +249,6 @@ else:
 
 print(f'Hej {player.name}! Ditt totala liv är {player.hp} och vid varje attack kommer du göra {player.damage} i skada')
 
+fight_scenario_2(player, monster)
+print(monster.count)
+print(f'{monster.count}')
