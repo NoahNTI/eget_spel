@@ -46,14 +46,22 @@ def modinv(a, m):
     else:
         return x % m
 
-def tolk_pq_rsa_hund_krypterningsmakapärishnycklar_för_lösning_apa_med_bannnanna_hej_jag_hetger_mångs(index_to_get):
-    index_to_get = int(input('What index number are you looking for:    '))
+def tolk_rsa(index_to_get):
 
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
         for line in f:
             if line.startswith(f"{index_to_get}:"):
                 
-                crypt_str = line.split(":")[1].strip()
-                crypt_numbers = [int(x) for x in crypt_str.split()]
+                middle_part = line.split(":")[2]
+                if ":" in middle_part:
+                    last_part = middle_part.rsplit(":", 1)[2]
+                else:
+                    last_part = middle_part
                 
-                print(f"The incrypted version is {crypt_numbers} \nThe cryptated version is:")
+                n, d = last_part.split(',')
+                
+                n = int(n)
+                d = int(d)
+                
+                return n, d
+                
