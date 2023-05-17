@@ -36,7 +36,7 @@ def clear():
 def menu():
     while True: 
         p, q, n, phi, e, d = RSA_keys.generate_rsa_keys()
-           
+        
         chois = (input("Tryck (1) för att skriva ett medelande\nTryck (2) för att avkryptera medelanden\n:   "))
         print('\n')
         try:
@@ -57,6 +57,18 @@ def menu():
         else:
             pass
         print('\n')
+
+def remove_by_index():
+    with open("egna_spel/RSA_Teknik/krypterade_medelande.txt", 'r') as fp:
+            max_index = len(fp.readlines())
+    print(f'The max index is now ({max_index-1})')
+    index_to_get = int(input('What index number are you looking for to remove from list:    '))
+    with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
+        for line in f:
+            if line.startswith(f"{index_to_get}:"):
+                
+                crypt_str = 'b'
+                crypt_numbers = [int(x) for x in crypt_str.split()]
             
 def get_crypt_by_index(d,n):
     with open("egna_spel/RSA_Teknik/krypterade_medelande.txt", 'r') as fp:
@@ -66,7 +78,6 @@ def get_crypt_by_index(d,n):
     index_to_get = int(input('What index number are you looking for:    '))
     
     #Hittar nycklarna
-    
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'r') as f:
         for line in f:
             if line.startswith(f"{index_to_get}:"):
@@ -90,7 +101,6 @@ def get_crypt_by_index(d,n):
     return None
 
 def crypt(e, n):
-    
     medelande = input('Skriv ett medelande:     ')
     if medelande == '':
         medelande = 'Blank message'
@@ -127,4 +137,5 @@ def add_crypt_to_list(d, n):
     with open('egna_spel/RSA_Teknik/krypterade_medelande.txt', 'a') as f:
         f.write(f"{max_index}: " + ' '.join(map(str, krypterat_medelande)) + f": {n}, {d}" + "\n")
 
-menu()
+if __name__ == "__main__":
+    menu()
