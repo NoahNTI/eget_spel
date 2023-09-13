@@ -13,12 +13,13 @@ letter_used = []
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
 def guess():
     wrong_guesses = 0
     while '_' in word_word_3:
         print(" ".join(word_word_3))
         print('')
-        print('What letter do you think is in the word?: ') 
+        print('What letter do you think is in the word?: ')
         letter_guess = input('').upper()
         if letter_guess == None:
             print('That\'s not a letter')
@@ -43,13 +44,15 @@ def guess():
                 print(f'you have {13 - wrong_guesses} guesses left')
             letter_used.append(letter_guess)
         print('\n\n\n\n\n')
-        
+
+
 def letter_in_word(letter_guess):
     i = 0
     for letter in letters:
         if letter_guess == letters[i]:
             word_word_3[i] = letter_guess
         i += 1
+
 
 word = str(get_random_word.word()).upper()
 clear()
@@ -62,7 +65,7 @@ for x in letters:
     else:
         word_word_3.append('_')
 
-while True: 
+while True:
     guess()
     print(f'Great jobb, you word whas {" ".join(word_word_3)}')
     break
