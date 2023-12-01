@@ -3,16 +3,13 @@ import time
 import os
 import get_random_word
 
-
 letters = []
 word_word_3 = []
 ncorrect_letters = []
 letter_used = []
 
-
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-
 
 def guess():
     wrong_guesses = 0
